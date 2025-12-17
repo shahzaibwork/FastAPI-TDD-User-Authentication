@@ -17,9 +17,9 @@ from app.models.user import User
 from app.config.security import hash_password
 from app.services.user import _generate_tokens
 
-USER_NAME = "Keshari Nandan"
-USER_EMAIL = "keshari@describly.com"
-USER_PASSWORD = "123#Describly"
+USER_NAME = "Shahzaib"
+USER_EMAIL = "shahzaib@example.com"
+USER_PASSWORD = "Shahzaib@123"
 
 engine = create_engine("sqlite:///./fastapi.db")
 SessionTesting = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -53,6 +53,7 @@ def client(app_test, test_session):
     fm.config.SUPPRESS_SEND = 1
     return TestClient(app_test)
 
+
 @pytest.fixture(scope="function")
 def auth_client(app_test, test_session, user):
     def _test_db():
@@ -82,6 +83,7 @@ def inactive_user(test_session):
     test_session.refresh(model)
     return model
 
+
 @pytest.fixture(scope="function")
 def user(test_session):
     model = User()
@@ -95,6 +97,7 @@ def user(test_session):
     test_session.commit()
     test_session.refresh(model)
     return model
+
 
 @pytest.fixture(scope="function")
 def unverified_user(test_session):

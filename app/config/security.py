@@ -18,12 +18,25 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
-def hash_password(password):
+def hash_password(password: str) -> str:
+    # bcrypt only supports 72 bytes
+    if isinstance(password, str):
+        password = password.encode("utf-8")
+
+    password = password[:72]
+
     return pwd_context.hash(password)
 
 
-def verify_password(plain_password, hashed_password):
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    if isinstance(plain_password, str):
+        plain_password = plain_password.encode("utf-8")
+
+    plain_password = plain_password[:72]
+
     return pwd_context.verify(plain_password, hashed_password)
+
 
 
 def is_password_strong_enough(password: str) -> bool:
